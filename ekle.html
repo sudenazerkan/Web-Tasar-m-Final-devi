@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport"
+content="width=device-width,initial-scale=1.0">
+
+<title>Etkinlik Ekle</title>
+
+<link rel="stylesheet"
+href="style.css">
+</head>
+<body>
+
+<nav class="navbar">
+<div class="logo">
+Mersin Etkinlik
+</div>
+
+<ul>
+<li><a href="index.html">Ana Sayfa</a></li>
+<li><a href="etkinlikler.html">Etkinlikler</a></li>
+<li><a href="ekle.html">Etkinlik Ekle</a></li>
+<li><a href="kayitlarim.html">Kayıtlarım</a></li>
+</ul>
+
+</nav>
+
+
+<section class="form-page">
+
+<div class="form-box">
+
+<h1>Yeni Etkinlik Ekle</h1>
+
+<form id="eventForm">
+
+<input
+type="text"
+id="title"
+placeholder="Etkinlik Adı"
+required
+>
+
+<input
+type="text"
+id="category"
+placeholder="Kategori"
+required
+>
+
+<input
+type="date"
+id="date"
+required
+>
+
+<input
+type="time"
+id="time"
+required
+>
+
+<input
+type="text"
+id="venue"
+placeholder="Mekan"
+required
+>
+
+<input
+type="number"
+id="price"
+placeholder="Ücret"
+required
+>
+
+<textarea
+id="description"
+placeholder="Açıklama"
+required>
+</textarea>
+
+<button type="submit">
+Etkinlik Ekle
+</button>
+
+</form>
+
+</div>
+
+</section>
+
+<script src="script.js"></script>
+
+</body>
+</html>
