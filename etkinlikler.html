@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Etkinlikler | Mersin Etkinlik</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="logo">Mersin Etkinlik</div>
+
+  <ul>
+    <li><a href="index.html">Ana Sayfa</a></li>
+    <li><a href="etkinlikler.html">Etkinlikler</a></li>
+    <li><a href="ekle.html">Etkinlik Ekle</a></li>
+    <li><a href="kayitlarim.html">Kayıtlarım</a></li>
+  </ul>
+</nav>
+
+<section class="page-title">
+  <h1>Etkinlikler</h1>
+  <p>Mersin’deki güncel etkinlikleri keşfet</p>
+</section>
+
+<section class="filter-area">
+  <button onclick="kategoriFiltrele('Tümü')">Tümü</button>
+  <button onclick="kategoriFiltrele('Konser')">Konser</button>
+  <button onclick="kategoriFiltrele('Tiyatro')">Tiyatro</button>
+  <button onclick="kategoriFiltrele('Festival')">Festival</button>
+  <button onclick="kategoriFiltrele('Spor')">Spor</button>
+  <button onclick="kategoriFiltrele('Workshop')">Workshop</button>
+</section>
+
+<section class="events-section">
+  <div id="event-container"></div>
+</section>
+
+<script src="script.js"></script>
+</body>
+</html>
