@@ -13,9 +13,10 @@ content="width=device-width,initial-scale=1.0">
 
 <nav class="navbar">
 
-<div class="logo">
-Mersin Etkinlik
-</div>
+<a href="index.html" class="logo">
+  <img src="images/logo.png" alt="Mersin Etkinlik Logo">
+  <div class="brand-text">mersinetkinlik</div>
+</a>
 
 <ul>
 <li><a href="index.html">Ana Sayfa</a></li>
@@ -33,10 +34,27 @@ Kayıtlarım
 </a></li>
 
 </ul>
+<div class="nav-actions">
 
+    <input
+        type="text"
+        placeholder="Etkinlik ara..."
+        class="nav-search">
+
+    <a href="kayitlarim.html" class="ticket-btn">
+        🎟️
+    </a>
+
+    <a href="#" class="login-btn">
+        Giriş Yap
+    </a>
+
+    <a href="#" class="register-btn">
+        Kayıt Ol
+    </a>
+
+</div>
 </nav>
-
-
 
 <section class="hero">
 
@@ -74,6 +92,13 @@ Etkinlikleri Gör
 
 </section>
 
+
+
+<footer class="footer">
+    © 2026 MersinEtkinlik | Sadece üniversite öğrencilerine özeldir.
+</footer>
+
+<button id="topBtn" onclick="yukariCik()">↑</button>
 
 <script src="script.js"></script>
 
