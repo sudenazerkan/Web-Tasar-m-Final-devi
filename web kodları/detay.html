@@ -7,22 +7,61 @@
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
 <nav class="navbar">
-  <div class="logo">Mersin Etkinlik</div>
 
-  <ul>
-    <li><a href="index.html">Ana Sayfa</a></li>
-    <li><a href="etkinlikler.html">Etkinlikler</a></li>
-    <li><a href="ekle.html">Etkinlik Ekle</a></li>
-    <li><a href="kayitlarim.html">Kayıtlarım</a></li>
-  </ul>
+<a href="index.html" class="logo">
+  <img src="images/logo.png" alt="Mersin Etkinlik Logo">
+  <div class="brand-text">mersinetkinlik</div>
+</a>
+
+<ul>
+<li><a href="index.html">Ana Sayfa</a></li>
+
+<li><a href="etkinlikler.html">
+Etkinlikler
+</a></li>
+
+<li><a href="ekle.html">
+Etkinlik Ekle
+</a></li>
+
+<li><a href="kayitlarim.html">
+Kayıtlarım
+</a></li>
+
+</ul>
+<div class="nav-actions">
+
+    <input
+        type="text"
+        placeholder="Etkinlik ara..."
+        class="nav-search">
+
+    <a href="kayitlarim.html" class="ticket-btn">
+        🎟️
+    </a>
+
+    <a href="#" class="login-btn">
+        Giriş Yap
+    </a>
+
+    <a href="#" class="register-btn">
+        Kayıt Ol
+    </a>
+
+</div>
 </nav>
+
 
 <section class="detail-page">
   <div id="detail-container"></div>
 </section>
 
 <script src="script.js"></script>
+
+<footer class="footer">
+    © 2026 MersinEtkinlik | Sadece üniversite öğrencilerine özeldir.
+</footer>
+<button id="topBtn" onclick="yukariCik()">↑</button>
 </body>
 </html>
