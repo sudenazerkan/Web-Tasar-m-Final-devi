@@ -36,21 +36,18 @@ Kayıtlarım
 </ul>
 <div class="nav-actions">
 
-    <input
-        type="text"
-        placeholder="Etkinlik ara..."
-        class="nav-search">
+<input
+  type="text"
+  placeholder="Etkinlik ara..."
+  class="nav-search"
+  onkeydown="navArama(event)">
 
-    <a href="kayitlarim.html" class="ticket-btn">
-        🎟️
-    </a>
+<a href="favoriler.html" class="ticket-btn">
+    ❤️
+</a>
 
-    <a href="#" class="login-btn">
-        Giriş Yap
-    </a>
-
-    <a href="#" class="register-btn">
-        Kayıt Ol
+<a href="#" class="login-btn" onclick="authAc('Giriş Yap')">Giriş Yap</a>
+<a href="#" class="register-btn" onclick="authAc('Kayıt Ol')">Kayıt Ol</a>
     </a>
 
 </div>
@@ -101,6 +98,22 @@ Etkinlikleri Gör
 <button id="topBtn" onclick="yukariCik()">↑</button>
 
 <script src="script.js"></script>
+<div id="authModal" class="auth-modal">
+
+  <div class="auth-box">
+
+    <span class="auth-close" onclick="authKapat()">×</span>
+
+    <h2 id="authTitle">Giriş Yap</h2>
+
+    <input type="email" placeholder="E-posta">
+    <input type="password" placeholder="Şifre">
+
+    <button onclick="authDevam()">Devam Et</button>
+
+  </div>
+
+</div>
 
 </body>
 </html>
