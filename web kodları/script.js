@@ -344,7 +344,7 @@ const etkinlikler = [
 
 document.addEventListener("DOMContentLoaded", function(){
 
-if(document.getElementById("event-container")){
+if(document.getElementById("event-container") && !window.location.pathname.includes("favoriler.html")){
 
 let userEvents=
 JSON.parse(
@@ -388,7 +388,18 @@ tumEtkinlikler;
 etkinlikleriGoster(
 tumEtkinlikler
 );
+const gelenArama = localStorage.getItem("navbarArama");
 
+if(gelenArama){
+    const sonuc = tumEtkinlikler.filter(function(event){
+        return event.title.toLowerCase().includes(gelenArama.toLowerCase()) ||
+               event.category.toLowerCase().includes(gelenArama.toLowerCase()) ||
+               event.venue.toLowerCase().includes(gelenArama.toLowerCase());
+    });
+
+    etkinlikleriGoster(sonuc);
+    localStorage.removeItem("navbarArama");
+}
 }
 
 });
@@ -407,6 +418,14 @@ function etkinlikleriGoster(liste) {
       <div class="event-card"
 onclick="window.location.href='detay.html?id=${event.id}'">
         <img src="${event.image}" alt="${event.title}">
+<div class="price-badge">
+
+    ${event.price == 0 ? "Ücretsiz" : event.price + "₺"}
+
+</div>
+<button class="favorite-btn" onclick="event.stopPropagation(); favoriEkle(${event.id})">
+    ♡
+</button>
 
         <div class="event-info">
           <span class="category-badge">${event.category}</span>
@@ -814,4 +833,101 @@ function yukariCik(){
     top:0,
     behavior:"smooth"
   });
+}
+function authAc(baslik){
+    const modal = document.getElementById("authModal");
+    const title = document.getElementById("authTitle");
+
+    if(!modal || !title){
+        return;
+    }
+
+    title.textContent = baslik;
+    modal.style.display = "flex";
+}
+
+function authKapat(){
+    const modal = document.getElementById("authModal");
+
+    if(!modal){
+        return;
+    }
+
+    modal.style.display = "none";
+}
+function authDevam(){
+    alert("İşlem başarılı ✅");
+    authKapat();
+}
+function navArama(event){
+    if(event.key === "Enter"){
+        const arama = event.target.value.trim();
+
+        if(arama !== ""){
+            localStorage.setItem("navbarArama", arama);
+            window.location.href = "etkinlikler.html";
+        }
+    }
+}
+function favoriEkle(id){
+    let favoriler = JSON.parse(localStorage.getItem("favoriler")) || [];
+
+    if(favoriler.includes(id)){
+        favoriler = favoriler.filter(function(favoriId){
+            return favoriId !== id;
+        });
+
+        localStorage.setItem("favoriler", JSON.stringify(favoriler));
+        alert("Favorilerden çıkarıldı.");
+    }else{
+        favoriler.push(id);
+        localStorage.setItem("favoriler", JSON.stringify(favoriler));
+        alert("Favorilere eklendi ❤️");
+    }
+}
+if(window.location.pathname.includes("favoriler.html")){
+
+    let userEvents =
+    JSON.parse(localStorage.getItem("userEvents")) || [];
+
+    let duzenlenmisUserEvents =
+    userEvents.map(function(item,index){
+
+        return{
+            id:100+index,
+            title:item.title,
+            category:item.category,
+            date:item.date,
+            time:item.time,
+            venue:item.venue,
+            district:"Mersin",
+            price:item.price,
+            image:item.image || "https://picsum.photos/600/400",
+            description:item.description,
+            organizer:"Kullanıcı",
+            status:"Yakında"
+        };
+
+    });
+
+    let tumEtkinliklerFavori =
+    [
+        ...etkinlikler,
+        ...duzenlenmisUserEvents
+    ];
+
+    let favoriler =
+    JSON.parse(localStorage.getItem("favoriler")) || [];
+
+    let favoriEtkinlikler =
+    tumEtkinliklerFavori.filter(function(event){
+        return favoriler.includes(event.id);
+    });
+
+    if(favoriEtkinlikler.length === 0){
+        document.getElementById("event-container").innerHTML =
+        "<h2 style='text-align:center;'>Henüz favori etkinlik eklenmedi.</h2>";
+    }else{
+        etkinlikleriGoster(favoriEtkinlikler);
+    }
 }
