@@ -11,6 +11,7 @@ content="width=device-width,initial-scale=1.0">
 </head>
 <body>
 
+<!-- Üst navigasyon menüsü -->
 <nav class="navbar">
 
 <a href="index.html" class="logo">
@@ -53,6 +54,7 @@ Kayıtlarım
 </div>
 </nav>
 
+<!-- Ana tanıtım bölümü -->
 <section class="hero">
 
 <h1>
@@ -69,7 +71,7 @@ Etkinlikleri Gör
 
 </section>
 
-
+<!-- Etkinlik kategori kartları -->
 <section class="features">
 
 <div class="feature-card">
@@ -89,8 +91,30 @@ Etkinlikleri Gör
 
 </section>
 
+<section class="newsletter">
 
+    <h2>Etkinliklerden Haberdar Ol</h2>
 
+    <p>Yeni konser, festival ve workshop duyurularını kaçırma.</p>
+
+    <div class="newsletter-box">
+
+        <input
+            type="email"
+            id="newsletterEmail"
+            placeholder="E-posta adresin">
+
+        <button onclick="bultenKayit()">
+
+            Abone Ol
+
+        </button>
+
+    </div>
+
+</section>
+
+<!-- Alt bilgi alanı -->
 <footer class="footer">
     © 2026 MersinEtkinlik | Sadece üniversite öğrencilerine özeldir.
 </footer>
@@ -105,11 +129,41 @@ Etkinlikleri Gör
     <span class="auth-close" onclick="authKapat()">×</span>
 
     <h2 id="authTitle">Giriş Yap</h2>
+<input
+       type="text"
+       id="ad"
+       placeholder="Ad">
 
-    <input type="email" placeholder="E-posta">
-    <input type="password" placeholder="Şifre">
 
-    <button onclick="authDevam()">Devam Et</button>
+<input
+       type="text"
+       id="soyad"
+       placeholder="Soyad">
+
+
+<input
+       type="email"
+       id="email"
+       placeholder="E-posta">
+
+
+<input
+       type="text"
+       id="telefon"
+       placeholder="Telefon">
+
+
+<label class="check-row">
+    <input type="checkbox" id="kurallar">
+    <span>Şartları kabul ediyorum</span>
+</label>
+
+
+<button onclick="kayitKontrol()">
+
+    Devam Et
+
+</button>
 
   </div>
 
