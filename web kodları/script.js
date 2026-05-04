@@ -403,7 +403,7 @@ if(gelenArama){
 }
 
 });
-
+// Etkinlik listesini kart yapısında ekrana gösterir
 function etkinlikleriGoster(liste) {
   const container = document.getElementById("event-container");
   container.innerHTML = "";
@@ -462,7 +462,8 @@ onclick="window.location.href='detay.html?id=${event.id}'">
     `;
   });
 }
- 
+
+ // Seçilen kategoriye göre etkinlikleri filtreler.
 function kategoriFiltrele(kategori) {
   if (kategori === "Tümü") {
     etkinlikleriGoster(window.tumEtkinlikler);
@@ -474,9 +475,11 @@ function kategoriFiltrele(kategori) {
     etkinlikleriGoster(filtreliListe);
   }
 }
-// Detay sayfasında URL'den id bilgisini alır
+
+// URL üzerinden gelen etkinlik id bilgisine göre detay sayfasını oluşturur.
 function detaySayfasiniYukle() {
   const detailContainer = document.getElementById("detail-container");
+
 
   if (!detailContainer) {
     return;
@@ -516,6 +519,11 @@ ${localStorage.getItem("kontenjan_"+secilenEtkinlik.id) || 100}
 </span>
 kişilik kontenjan
 </p>
+<div class="capacity-bar">
+
+    <div id="capacityFill"></div>
+
+</div>
 
         <div class="countdown" id="countdown">
           Geri sayım hesaplanıyor...
@@ -537,6 +545,7 @@ function geriSayimBaslat(tarih, saat) {
 
   const hedefTarih = new Date(tarih + "T" + saat + ":00").getTime();
 
+// Etkinlik sayaçlarını her saniye günceller
   setInterval(function() {
     const simdi = new Date().getTime();
     const fark = hedefTarih - simdi;
@@ -828,24 +837,58 @@ window.addEventListener("scroll", function(){
   }
 });
 
+// Sayfanın en üstüne yumuşak geçiş yapar
 function yukariCik(){
   window.scrollTo({
     top:0,
     behavior:"smooth"
   });
 }
+// Giriş yap veya kayıt ol modal penceresini açar
 function authAc(baslik){
     const modal = document.getElementById("authModal");
     const title = document.getElementById("authTitle");
+    const box = document.querySelector(".auth-box");
 
-    if(!modal || !title){
+    if(!modal || !title || !box){
         return;
     }
 
     title.textContent = baslik;
+
+    if(baslik === "Giriş Yap"){
+        box.innerHTML = `
+            <span class="auth-close" onclick="authKapat()">×</span>
+            <h2 id="authTitle">Giriş Yap</h2>
+
+            <input type="email" id="loginEmail" placeholder="E-posta">
+            <input type="password" id="loginPassword" placeholder="Şifre">
+
+            <button onclick="authDevam()">Devam Et</button>
+        `;
+    }else{
+        box.innerHTML = `
+            <span class="auth-close" onclick="authKapat()">×</span>
+            <h2 id="authTitle">Kayıt Ol</h2>
+
+            <input type="text" id="ad" placeholder="Ad">
+            <input type="text" id="soyad" placeholder="Soyad">
+            <input type="email" id="email" placeholder="E-posta">
+            <input type="password" id="sifre" placeholder="Şifre oluştur">
+            <input type="text" id="telefon" placeholder="Telefon">
+
+            <label class="check-row">
+                <input type="checkbox" id="kurallar">
+                <span>Şartları kabul ediyorum</span>
+            </label>
+
+            <button onclick="kayitKontrol()">Devam Et</button> 
+        `;
+    }
+
     modal.style.display = "flex";
 }
-
+// Açık olan modal pencereyi kapatır.
 function authKapat(){
     const modal = document.getElementById("authModal");
 
@@ -856,8 +899,27 @@ function authKapat(){
     modal.style.display = "none";
 }
 function authDevam(){
-    alert("İşlem başarılı ✅");
+
+    const emailInput = document.getElementById("loginEmail");
+
+    let email = "";
+
+    if(emailInput){
+        email = emailInput.value;
+    }
+
+    if(email === ""){
+        alert("E-posta giriniz.");
+        return;
+    }
+
+    localStorage.setItem("aktifKullanici", email);
+
+    alert("Giriş başarılı ✅");
+
     authKapat();
+
+    kullaniciGoster();
 }
 function navArama(event){
     if(event.key === "Enter"){
@@ -869,6 +931,7 @@ function navArama(event){
         }
     }
 }
+// Etkinliği localStorage kullanarak favorilere ekler veya çıkarır.
 function favoriEkle(id){
     let favoriler = JSON.parse(localStorage.getItem("favoriler")) || [];
 
@@ -931,3 +994,213 @@ if(window.location.pathname.includes("favoriler.html")){
         etkinlikleriGoster(favoriEtkinlikler);
     }
 }
+function bultenKayit(){
+
+    const email =
+    document.getElementById("newsletterEmail").value;
+
+
+    if(email === ""){
+
+        alert("E-posta giriniz.");
+
+        return;
+
+    }
+
+
+    if(!email.includes("@")){
+
+        alert("Geçerli e-posta giriniz.");
+
+        return;
+
+    }
+
+
+    let aboneler =
+    JSON.parse(localStorage.getItem("aboneler")) || [];
+
+
+    if(aboneler.includes(email)){
+
+        alert("Bu e-posta zaten kayıtlı.");
+
+        return;
+
+    }
+
+
+    aboneler.push(email);
+
+    localStorage.setItem(
+        "aboneler",
+        JSON.stringify(aboneler)
+    );
+
+
+    alert("Başarıyla abone oldunuz ❤️");
+
+    document.getElementById(
+        "newsletterEmail"
+    ).value = "";
+
+}
+function kontenjanBariGuncelle(){
+
+    const text =
+    document.getElementById("kontenjan");
+
+
+    const fill =
+    document.getElementById("capacityFill");
+
+
+    if(!text || !fill) return;
+
+
+    const kapasite =
+    Number(text.innerText);
+
+
+    const yuzde =
+    (kapasite / 100) * 100;
+
+
+    fill.style.width =
+    yuzde + "%";
+
+}
+
+kontenjanBariGuncelle();
+
+// Kullanıcı kayıt formundaki bilgileri doğrular
+function kayitKontrol(){
+
+    const ad =
+    document.getElementById("ad").value;
+
+
+    const soyad =
+    document.getElementById("soyad").value;
+
+
+    const email =
+    document.getElementById("email").value;
+
+
+    const sifre =
+    document.getElementById("sifre").value;
+
+
+    const telefon =
+    document.getElementById("telefon").value;
+
+
+    const kurallar =
+    document.getElementById("kurallar").checked;
+
+
+    if(
+        ad === "" ||
+        soyad === "" ||
+        email === "" ||
+        sifre === "" ||
+        telefon === ""
+    ){
+
+        alert("Tüm alanları doldurun.");
+
+        return;
+
+    }
+
+
+    if(!email.includes("@")){
+
+        alert("Geçerli e-posta girin.");
+
+        return;
+
+    }
+
+    if(sifre.length < 6){
+    alert("Şifre en az 6 karakter olmalıdır.");
+    return;
+}
+
+
+    if(telefon.length < 10){
+
+        alert("Telefon eksik.");
+
+        return;
+
+    }
+
+
+    if(!kurallar){
+
+        alert("Şartları kabul etmelisiniz.");
+
+        return;
+
+    }
+
+
+    alert("Kayıt başarılı 🎉");
+
+}
+function kullaniciGoster(){
+
+    const aktifKullanici =
+    localStorage.getItem("aktifKullanici");
+
+    const navActions =
+    document.querySelectorAll(".nav-actions");
+
+    navActions.forEach(function(nav){
+
+        const loginBtn =
+        nav.querySelector(".login-btn");
+
+        const registerBtn =
+        nav.querySelector(".register-btn");
+
+        if(aktifKullanici && loginBtn && registerBtn){
+
+            loginBtn.innerText =
+            "👤 " + aktifKullanici.split("@")[0];
+
+            loginBtn.removeAttribute("onclick");
+
+            registerBtn.innerText =
+            "Çıkış Yap";
+
+            registerBtn.setAttribute(
+                "onclick",
+                "cikisYap()"
+            );
+
+            registerBtn.setAttribute(
+                "href",
+                "#"
+            );
+
+        }
+
+    });
+
+}
+
+function cikisYap(){
+
+    localStorage.removeItem("aktifKullanici");
+
+    alert("Çıkış yapıldı.");
+
+    location.reload();
+
+}
+
+kullaniciGoster();
